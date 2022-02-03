@@ -6,6 +6,9 @@ import Listeners.TextListener;
 import javax.swing.*;
 import java.awt.*;
 
+// Compile and run
+// javac -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" PlugAndChargeGUI.java
+// java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" PlugAndChargeGUI
 
 public class PlugAndChargeGUI {
 
@@ -16,30 +19,30 @@ public class PlugAndChargeGUI {
     public PlugAndChargeGUI() {
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
+        ButtonListener buttonListener = new ButtonListener();
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel lblPCT = new JLabel("Plug and Charge Tester");
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 0, 0);
+        gbc.insets = new Insets(0, 10, 10, 0);
         gbc.weightx = 1;
         panel.add(lblPCT, gbc);
 
         JLabel lblVersion = new JLabel("V.0.1");
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridwidth = 3;
+        gbc.gridx = 2;
+        gbc.gridwidth = 1;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 10);
-        gbc.weightx = 3;
+        gbc.weightx = 1;
         panel.add(lblVersion, gbc);
-
-
 
         JButton stationButton = new JButton("Emulate Station");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        stationButton.addActionListener(buttonListener);
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -60,6 +63,7 @@ public class PlugAndChargeGUI {
         JButton chargerButton = new JButton("Emulate Charger");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        chargerButton.addActionListener(buttonListener);
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -79,8 +83,7 @@ public class PlugAndChargeGUI {
 
         JButton startButton = new JButton("Start");
         gbc = new GridBagConstraints();
-        //ButtonListener buttonListener = new ButtonListener();
-        //startButton.addActionListener(buttonListener);
+        startButton.addActionListener(buttonListener);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
@@ -100,19 +103,23 @@ public class PlugAndChargeGUI {
         panel.add(testMultipleButton, gbc);
 
         textField = new JTextField(20);
-        //TextListener textListener = new TextListener();
-        //textField.addActionListener(textListener);
+
         responseArea = new JTextArea(5, 20);
         responseArea.setEditable(false);
+        responseArea.setLineWrap(true);
+        responseArea.setForeground(Color.GREEN);
+        Font font = new Font("Courier", Font.BOLD, 12);
+        responseArea.setFont(font);
+        responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.insets = new Insets(0, 10, 0, 10);
         gbc.weightx = 1;
-        panel.add(responseArea, gbc);
+        panel.add(scrollPane, gbc);
 
     }
 
