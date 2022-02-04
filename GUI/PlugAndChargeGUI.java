@@ -1,22 +1,27 @@
 package GUI;
 
 import Listeners.ButtonListener;
-import Listeners.TextListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 // Compile and run
 // javac -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" PlugAndChargeGUI.java
-// java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" PlugAndChargeGUI
+// java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" GUI.PlugAndChargeGUI
 
 public class PlugAndChargeGUI {
 
     private static JTextField textField;
     private static JTextArea responseArea;
     private JPanel panel;
+    private static JButton stationButton;
+    private static JButton vehicleButton;
+    private static ArrayList<JButton> buttons = new ArrayList<>();
+    private PlugAndCharge instance = new PlugAndCharge();
 
     public PlugAndChargeGUI() {
+
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         ButtonListener buttonListener = new ButtonListener();
@@ -39,7 +44,7 @@ public class PlugAndChargeGUI {
         gbc.weightx = 1;
         panel.add(lblVersion, gbc);
 
-        JButton stationButton = new JButton("Emulate Station");
+        stationButton = new JButton("Emulate Station");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         stationButton.addActionListener(buttonListener);
@@ -48,6 +53,7 @@ public class PlugAndChargeGUI {
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.weightx = 1;
+        buttons.add(0, stationButton);
         panel.add(stationButton, gbc);
 
         JLabel optionsLabel = new JLabel("Options:");
@@ -60,16 +66,17 @@ public class PlugAndChargeGUI {
         gbc.weightx = 1;
         panel.add(optionsLabel, gbc);
 
-        JButton chargerButton = new JButton("Emulate Charger");
+        vehicleButton = new JButton("Emulate Vehicle");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        chargerButton.addActionListener(buttonListener);
+        vehicleButton.addActionListener(buttonListener);
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.weightx = 1;
-        panel.add(chargerButton, gbc);
+        buttons.add(1, vehicleButton);
+        panel.add(vehicleButton, gbc);
 
         JButton debugButton = new JButton("Show Logs");
         gbc = new GridBagConstraints();
@@ -135,6 +142,14 @@ public class PlugAndChargeGUI {
         return responseArea;
     }
 
+    public static ArrayList<JButton> getButtons() {
+        return buttons;
+    }
+
+    public static JButton getVehicleButton() {
+        return vehicleButton;
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -145,6 +160,8 @@ public class PlugAndChargeGUI {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
+                PlugAndChargeGUI.getButtons();
+                PlugAndCharge.getInstance().setButtons(PlugAndChargeGUI.getButtons());
             }
         });
     }

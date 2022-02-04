@@ -1,5 +1,6 @@
 package Listeners;
 
+import GUI.PlugAndCharge;
 import GUI.PlugAndChargeGUI;
 
 import javax.swing.*;
@@ -25,15 +26,27 @@ public class ButtonListener implements ActionListener {
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
                 break;
             case "Emulate Station":
+                if (PlugAndCharge.getInstance().isEmulateVehicle()){
+                    PlugAndChargeGUI.getButtons().get(1).setBackground(null); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
+                    PlugAndCharge.getInstance().setEmulateStation(true);
+                }
+                // TODO Disable functionality if Start has been pressed
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
+                PlugAndCharge.getInstance().setEmulateStation(true);
 
-                // TODO May need a list of all buttons to be able to check status of the current buttons,
-                // TODO or just make flags? not sure
                 break;
-            case "Emulate Charger":
+            case "Emulate Vehicle":
+                if (PlugAndCharge.getInstance().isEmulateStation()){
+                    PlugAndChargeGUI.getButtons().get(0).setBackground(null); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(0).setForeground(null); // set Emulate Vehicle Button back to default
+                    PlugAndCharge.getInstance().setEmulateVehicle(true);
+                }
+                // TODO Disable functionality if Start has been pressed
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
+                PlugAndCharge.getInstance().setEmulateStation(true);
                 break;
         }
     }
