@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e){
@@ -24,6 +27,53 @@ public class ButtonListener implements ActionListener {
                 //Make sure the new text is visible, even if there
                 //was a selection in the text area.
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                if (PlugAndCharge.getInstance().isEmulateStation()){
+                    String command = "java -cp ../RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar com.v2gclarity.risev2g.secc.main.StartSECC";
+                    try {
+                        Process process = Runtime.getRuntime().exec(command);
+                        BufferedReader reader = new BufferedReader(
+                                new InputStreamReader(process.getInputStream()));
+                        String line;
+                        // TODO make output appear simultaneously for debug interface
+                        // For UI, need to print if successful or unsuccessful
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            responseArea.append(textField.getText() + line + "\n");
+                            textField.selectAll();
+                            responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                        }
+                        // TODO Station is not ending
+                        reader.close();
+                        process.destroy();
+                        System.out.println("process destoryed");
+
+                        // TODO Set buttons back to defaults to test again
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else if (PlugAndCharge.getInstance().isEmulateVehicle()){
+                    String command = "java -cp ../RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar com.v2gclarity.risev2g.evcc.main.StartEVCC";
+                    try {
+                        Process process = Runtime.getRuntime().exec(command);
+                        BufferedReader reader = new BufferedReader(
+                                new InputStreamReader(process.getInputStream()));
+                        String line;
+                        // TODO make output appear simultaneously
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            responseArea.append(textField.getText() + line + "\n");
+                            textField.selectAll();
+                            responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                        }
+
+                        reader.close();
+                        process.destroy();
+                        // TODO Set buttons back to defaults to test again
+
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 break;
             case "Emulate Station":
                 if (PlugAndCharge.getInstance().isEmulateVehicle()){
@@ -46,7 +96,7 @@ public class ButtonListener implements ActionListener {
                 // TODO Disable functionality if Start has been pressed
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
-                PlugAndCharge.getInstance().setEmulateStation(true);
+                PlugAndCharge.getInstance().setEmulateVehicle(true);
                 break;
         }
     }

@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 // Compile and run
-// javac -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" PlugAndChargeGUI.java
-// java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester" GUI.PlugAndChargeGUI
+// javac -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester;" PlugAndChargeGUI.java
+// java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester;" GUI.PlugAndChargeGUI
 
 public class PlugAndChargeGUI {
 
