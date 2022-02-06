@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ButtonListener implements ActionListener {
+
     public void actionPerformed(ActionEvent e){
         JButton button = (JButton) e.getSource();
         String buttonName = button.getText();
@@ -28,52 +29,59 @@ public class ButtonListener implements ActionListener {
                 //was a selection in the text area.
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
                 if (PlugAndCharge.getInstance().isEmulateStation()){
-                    String command = "java -cp ../RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar com.v2gclarity.risev2g.secc.main.StartSECC";
-                    try {
-                        Process process = Runtime.getRuntime().exec(command);
-                        BufferedReader reader = new BufferedReader(
-                                new InputStreamReader(process.getInputStream()));
-                        String line;
-                        // TODO make output appear simultaneously for debug interface
-                        // For UI, need to print if successful or unsuccessful
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
-                            responseArea.append(textField.getText() + line + "\n");
-                            textField.selectAll();
-                            responseArea.setCaretPosition(responseArea.getDocument().getLength());
-                        }
-                        // TODO Station is not ending
-                        reader.close();
-                        process.destroy();
-                        System.out.println("process destoryed");
+                    Thread thread = new Thread(() -> {
+                        String command = "java -cp ../RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar com.v2gclarity.risev2g.secc.main.StartSECC";
+                        try {
+                            Process process = Runtime.getRuntime().exec(command);
+                            BufferedReader reader = new BufferedReader(
+                                    new InputStreamReader(process.getInputStream()));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                System.out.println(line);
+                                responseArea.append(textField.getText() + line + "\n");
+                                textField.selectAll();
+                                responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                            }
+                            reader.close();
+                            process.destroy();
 
-                        // TODO Set buttons back to defaults to test again
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                } else if (PlugAndCharge.getInstance().isEmulateVehicle()){
-                    String command = "java -cp ../RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar com.v2gclarity.risev2g.evcc.main.StartEVCC";
-                    try {
-                        Process process = Runtime.getRuntime().exec(command);
-                        BufferedReader reader = new BufferedReader(
-                                new InputStreamReader(process.getInputStream()));
-                        String line;
-                        // TODO make output appear simultaneously
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
-                            responseArea.append(textField.getText() + line + "\n");
-                            textField.selectAll();
-                            responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
                         }
 
-                        reader.close();
-                        process.destroy();
-                        // TODO Set buttons back to defaults to test again
+                    });
+                    thread.start();
 
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                } else if (PlugAndCharge.getInstance().isEmulateVehicle()) {
+                    Thread thread = new Thread(() -> {
+                        String command = "java -cp ../RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar com.v2gclarity.risev2g.evcc.main.StartEVCC";
+                        try {
+                            Process process = Runtime.getRuntime().exec(command);
+                            BufferedReader reader = new BufferedReader(
+                                    new InputStreamReader(process.getInputStream()));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                System.out.println(line);
+                                responseArea.append(textField.getText() + line + "\n");
+                                textField.selectAll();
+                                responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                            }
+                            reader.close();
+                            process.destroy();
+
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    });
+                    thread.start();
                 }
+                PlugAndChargeGUI.getButtons().get(0).setBackground(null); // set Emulate Station Button back to default
+                PlugAndChargeGUI.getButtons().get(0).setForeground(null); // set Emulate Station Button back to default
+                PlugAndChargeGUI.getButtons().get(1).setBackground(null); // set Emulate Vehicle Button back to default
+                PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
+                ((JButton) e.getSource()).setBackground(null);
+                ((JButton) e.getSource()).setForeground(null);
+
                 break;
             case "Emulate Station":
                 if (PlugAndCharge.getInstance().isEmulateVehicle()){
@@ -81,7 +89,6 @@ public class ButtonListener implements ActionListener {
                     PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
                     PlugAndCharge.getInstance().setEmulateStation(true);
                 }
-                // TODO Disable functionality if Start has been pressed
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
                 PlugAndCharge.getInstance().setEmulateStation(true);
@@ -93,7 +100,6 @@ public class ButtonListener implements ActionListener {
                     PlugAndChargeGUI.getButtons().get(0).setForeground(null); // set Emulate Vehicle Button back to default
                     PlugAndCharge.getInstance().setEmulateVehicle(true);
                 }
-                // TODO Disable functionality if Start has been pressed
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
                 PlugAndCharge.getInstance().setEmulateVehicle(true);
