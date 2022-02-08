@@ -162,6 +162,13 @@ public class PlugAndChargeGUI {
                 frame.setVisible(true);
                 PlugAndChargeGUI.getButtons();
                 PlugAndCharge.getInstance().setButtons(PlugAndChargeGUI.getButtons());
+
+                JFrame frame2 = new JFrame("PlugAndChargeDebug");
+                frame2.getContentPane().add(new DebugGUI().getUI());
+                frame2.setLocationRelativeTo(null);
+                frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame2.pack();
+                frame2.setVisible(true);
             }
         });
     }
