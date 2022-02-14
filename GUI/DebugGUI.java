@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import Listeners.ButtonListener;
 
 public class DebugGUI {
 
@@ -26,7 +27,8 @@ public class DebugGUI {
         JButton backButton = new JButton("Back");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        //backButton.addActionListener(buttonListener);
+        ButtonListener buttonListener = new ButtonListener();
+        backButton.addActionListener(buttonListener);
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -58,4 +60,13 @@ public class DebugGUI {
     public JPanel getUI(){
         return panel;
     }
+
+    public static JTextField getTextField(){
+        return textField;
+    }
+
+    public static JTextArea getResponseArea(){
+        return responseArea;
+    }
+
 }

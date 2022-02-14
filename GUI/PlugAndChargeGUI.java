@@ -78,8 +78,9 @@ public class PlugAndChargeGUI {
         buttons.add(1, vehicleButton);
         panel.add(vehicleButton, gbc);
 
-        JButton debugButton = new JButton("Show Logs");
+        JButton debugButton = new JButton("Debug");
         gbc = new GridBagConstraints();
+        debugButton.addActionListener(buttonListener);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 1;
         gbc.gridx = 1;
@@ -150,25 +151,35 @@ public class PlugAndChargeGUI {
         return vehicleButton;
     }
 
+    public static void setResponseArea(JTextArea area){
+        responseArea = area;
+    }
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 JFrame frame = new JFrame("PlugAndCharge");
-                frame.getContentPane().add(new PlugAndChargeGUI().getUI());
+                PlugAndChargeGUI pcGUI = new PlugAndChargeGUI();
+                DebugGUI debugGUI = new DebugGUI();
+                frame.getContentPane().add(pcGUI.getUI());
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
                 PlugAndChargeGUI.getButtons();
                 PlugAndCharge.getInstance().setButtons(PlugAndChargeGUI.getButtons());
+                PlugAndCharge.getInstance().setFrame(frame);
+                PlugAndCharge.getInstance().setPCGUI(pcGUI);
+                PlugAndCharge.getInstance().setDebugGUI(debugGUI);
 
-                JFrame frame2 = new JFrame("PlugAndChargeDebug");
+                /*JFrame frame2 = new JFrame("PlugAndChargeDebug");
                 frame2.getContentPane().add(new DebugGUI().getUI());
                 frame2.setLocationRelativeTo(null);
                 frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame2.pack();
-                frame2.setVisible(true);
+                frame2.setVisible(true);*/
             }
         });
     }

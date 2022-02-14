@@ -2,6 +2,7 @@ package Listeners;
 
 import GUI.PlugAndCharge;
 import GUI.PlugAndChargeGUI;
+import GUI.DebugGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +17,15 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e){
         JButton button = (JButton) e.getSource();
         String buttonName = button.getText();
+        JFrame frame = PlugAndCharge.getInstance().getFrame();
         switch (buttonName){
             case "Start":
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
                 JTextField textField = PlugAndChargeGUI.getTextField();
                 JTextArea responseArea = PlugAndChargeGUI.getResponseArea();
+                JTextField debugField = DebugGUI.getTextField();
+                JTextArea debugArea = DebugGUI.getResponseArea();
                 String text = textField.getText();
                 responseArea.append(text + "Starting Test\n");
                 textField.selectAll();
@@ -38,9 +42,9 @@ public class ButtonListener implements ActionListener {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
-                                responseArea.append(textField.getText() + line + "\n");
-                                textField.selectAll();
-                                responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                                debugArea.append(textField.getText() + line + "\n");
+                                debugField.selectAll();
+                                debugArea.setCaretPosition(responseArea.getDocument().getLength());
                             }
                             reader.close();
                             process.destroy();
@@ -62,9 +66,9 @@ public class ButtonListener implements ActionListener {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
-                                responseArea.append(textField.getText() + line + "\n");
-                                textField.selectAll();
-                                responseArea.setCaretPosition(responseArea.getDocument().getLength());
+                                debugArea.append(textField.getText() + line + "\n");
+                                debugField.selectAll();
+                                debugArea.setCaretPosition(responseArea.getDocument().getLength());
                             }
                             reader.close();
                             process.destroy();
@@ -81,7 +85,7 @@ public class ButtonListener implements ActionListener {
                 PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
                 ((JButton) e.getSource()).setBackground(null);
                 ((JButton) e.getSource()).setForeground(null);
-
+                responseArea.append("Test complete.\n");
                 break;
             case "Emulate Station":
                 if (PlugAndCharge.getInstance().isEmulateVehicle()){
@@ -103,6 +107,22 @@ public class ButtonListener implements ActionListener {
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
                 PlugAndCharge.getInstance().setEmulateVehicle(true);
+                break;
+            case "Debug":
+                frame.getContentPane().remove(0);
+                frame.getContentPane().add(PlugAndCharge.getInstance().getDebugGUI().getUI());
+                frame.pack();
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                break;
+            case "Back":
+                frame.getContentPane().remove(0);
+                frame.getContentPane().add(PlugAndCharge.getInstance().getPCGUI().getUI());
+                frame.pack();
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 break;
         }
     }
