@@ -34,7 +34,7 @@ public class ButtonListener implements ActionListener {
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
                 if (PlugAndCharge.getInstance().isEmulateStation()){
                     Thread thread = new Thread(() -> {
-                        String command = "java -cp ../RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar com.v2gclarity.risev2g.secc.main.StartSECC";
+                        String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar";
                         try {
                             Process process = Runtime.getRuntime().exec(command);
                             BufferedReader reader = new BufferedReader(
@@ -58,7 +58,7 @@ public class ButtonListener implements ActionListener {
 
                 } else if (PlugAndCharge.getInstance().isEmulateVehicle()) {
                     Thread thread = new Thread(() -> {
-                        String command = "java -cp ../RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar com.v2gclarity.risev2g.evcc.main.StartEVCC";
+                        String command = "java -cp /home/pi/PlugAndChargeTester/RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar";
                         try {
                             Process process = Runtime.getRuntime().exec(command);
                             BufferedReader reader = new BufferedReader(
