@@ -43,7 +43,7 @@ public class ButtonListener implements ActionListener {
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
                                 debugArea.append(textField.getText() + line + "\n");
-                                debugField.selectAll();
+                                //debugField.selectAll();
                                 debugArea.setCaretPosition(responseArea.getDocument().getLength());
                             }
                             reader.close();
@@ -67,7 +67,7 @@ public class ButtonListener implements ActionListener {
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
                                 debugArea.append(textField.getText() + line + "\n");
-                                debugField.selectAll();
+                                //debugField.selectAll();
                                 debugArea.setCaretPosition(responseArea.getDocument().getLength());
                             }
                             reader.close();
@@ -85,7 +85,7 @@ public class ButtonListener implements ActionListener {
                 PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
                 ((JButton) e.getSource()).setBackground(null);
                 ((JButton) e.getSource()).setForeground(null);
-                responseArea.append("Test complete.\n");
+                //responseArea.append("Test complete.\n");
                 break;
             case "Emulate Station":
                 if (PlugAndCharge.getInstance().isEmulateVehicle()){
