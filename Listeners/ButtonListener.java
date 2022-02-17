@@ -109,16 +109,20 @@ public class ButtonListener implements ActionListener {
                 PlugAndCharge.getInstance().setEmulateVehicle(true);
                 break;
             case "Debug":
+                frame.revalidate();
                 frame.getContentPane().remove(0);
                 frame.getContentPane().add(PlugAndCharge.getInstance().getDebugGUI().getUI());
+                frame.repaint();
                 frame.pack();
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 break;
             case "Back":
+                frame.revalidate();
                 frame.getContentPane().remove(0);
                 frame.getContentPane().add(PlugAndCharge.getInstance().getPCGUI().getUI());
+                frame.repaint();
                 frame.pack();
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);

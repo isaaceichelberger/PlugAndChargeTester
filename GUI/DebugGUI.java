@@ -11,12 +11,12 @@ public class DebugGUI {
     private JPanel panel;
 
     public DebugGUI() {
-
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel lblPCT = new JLabel("Plug and Charge Tester Debug");
+        lblPCT.setFont(new Font("Vernanda", Font.PLAIN, 16));
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -45,7 +45,7 @@ public class DebugGUI {
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridwidth = 2;
         gbc.gridheight = 6;
         gbc.gridx = 0;

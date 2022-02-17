@@ -9,6 +9,8 @@ import java.util.ArrayList;
 // Compile and run
 // javac -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester;" PlugAndChargeGUI.java
 // java -cp ".;C:\Users\isaac\Desktop\Projects\PlugAndChargeTester;" GUI.PlugAndChargeGUI
+// jar -cfve PlugAndCharge.jar GUI.PlugAndChargeGUI ./GUI ./Listeners (in the PlugAndCharge Folder)
+// java -jar PlugAndCharge.jar
 
 public class PlugAndChargeGUI {
 
@@ -22,97 +24,102 @@ public class PlugAndChargeGUI {
 
     public PlugAndChargeGUI() {
 
-        panel = new JPanel();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        panel = new JPanel();        
         panel.setLayout(new GridBagLayout());
         ButtonListener buttonListener = new ButtonListener();
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel lblPCT = new JLabel("Plug and Charge Tester");
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        lblPCT.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 10, 10, 0);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;
         panel.add(lblPCT, gbc);
 
         JLabel lblVersion = new JLabel("V.0.1");
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        lblVersion.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 2;
-        gbc.gridwidth = 1;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 0, 10);
-        gbc.weightx = 1;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.weightx = 0.05;
+        gbc.weighty = 0.8;
         panel.add(lblVersion, gbc);
 
         stationButton = new JButton("Emulate Station");
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         stationButton.addActionListener(buttonListener);
-        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;      
         buttons.add(0, stationButton);
         panel.add(stationButton, gbc);
 
         JLabel optionsLabel = new JLabel("Options:");
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 1;
+        optionsLabel.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 0, 10);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;
         panel.add(optionsLabel, gbc);
 
         vehicleButton = new JButton("Emulate Vehicle");
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         vehicleButton.addActionListener(buttonListener);
-        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;      
         buttons.add(1, vehicleButton);
         panel.add(vehicleButton, gbc);
 
         JButton debugButton = new JButton("Debug");
         gbc = new GridBagConstraints();
         debugButton.addActionListener(buttonListener);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.weightx = 1;
+        gbc.weighty = 0.8;       
         gbc.insets = new Insets(0, 10, 0, 10);
         panel.add(debugButton, gbc);
 
         JButton startButton = new JButton("Start");
         gbc = new GridBagConstraints();
         startButton.addActionListener(buttonListener);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;        
         panel.add(startButton, gbc);
 
         JButton testMultipleButton = new JButton("Test Twice");
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.insets = new Insets(0, 10, 0, 10);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;       
         panel.add(testMultipleButton, gbc);
 
-        textField = new JTextField(20);
+        textField = new JTextField(80);
 
-        responseArea = new JTextArea(5, 20);
+        responseArea = new JTextArea(10, 80);
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
         responseArea.setForeground(Color.GREEN);
@@ -121,12 +128,13 @@ public class PlugAndChargeGUI {
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.insets = new Insets(0, 10, 0, 10);
         gbc.weightx = 1;
+        gbc.weighty = 0.8;       
         panel.add(scrollPane, gbc);
 
     }
@@ -161,8 +169,12 @@ public class PlugAndChargeGUI {
             @Override
             public void run() {
                 JFrame frame = new JFrame("PlugAndCharge");
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
                 PlugAndChargeGUI pcGUI = new PlugAndChargeGUI();
                 DebugGUI debugGUI = new DebugGUI();
+                frame.setBounds(0, 0, screenSize.width, screenSize.height);
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.getContentPane().setPreferredSize(screenSize);
                 frame.getContentPane().add(pcGUI.getUI());
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,12 +186,6 @@ public class PlugAndChargeGUI {
                 PlugAndCharge.getInstance().setPCGUI(pcGUI);
                 PlugAndCharge.getInstance().setDebugGUI(debugGUI);
 
-                /*JFrame frame2 = new JFrame("PlugAndChargeDebug");
-                frame2.getContentPane().add(new DebugGUI().getUI());
-                frame2.setLocationRelativeTo(null);
-                frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame2.pack();
-                frame2.setVisible(true);*/
             }
         });
     }
