@@ -24,12 +24,7 @@ public class PlugAndChargeGUI {
 
     public PlugAndChargeGUI() {
 
-        Dimension screenSize;
-        if (!System.getProperty("os.name").equalsIgnoreCase("Windows 10")){
-            screenSize = new Dimension(800, 400); 
-        } else {
-            screenSize =  Toolkit.getDefaultToolkit().getScreenSize();
-        }
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         panel = new JPanel();        
         panel.setLayout(new GridBagLayout());
         ButtonListener buttonListener = new ButtonListener();
