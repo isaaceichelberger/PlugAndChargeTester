@@ -26,7 +26,7 @@ public class DebugGUI {
 
         JButton backButton = new JButton("Back");
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         ButtonListener buttonListener = new ButtonListener();
         backButton.addActionListener(buttonListener);
         gbc.gridwidth = 1;
@@ -34,6 +34,8 @@ public class DebugGUI {
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 0, 10);
         gbc.weightx = 1;
+        gbc.weighty = 2;
+        gbc.gridheight = 1;
         panel.add(backButton, gbc);
 
         responseArea = new JTextArea(20, 80);
