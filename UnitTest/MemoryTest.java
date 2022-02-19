@@ -19,5 +19,9 @@ public class MemoryTest {
         System.out.println("Free memory available (MB): " + bytesToMegabytes(runtime.freeMemory()));
         System.out.println("Used memory in megabytes: "
                 + bytesToMegabytes(memory));
+        System.out.println("Total memory available (B): " + (runtime.totalMemory()));
+        System.out.println("Free memory available (B): " + (runtime.freeMemory()));
+        System.out.println("Used memory in Bytes: "
+                + (memory));
     }
 }
