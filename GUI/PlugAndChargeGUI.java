@@ -1,6 +1,7 @@
 package GUI;
 
 import Listeners.ButtonListener;
+import UnitTest.MemoryTest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -186,8 +187,11 @@ public class PlugAndChargeGUI {
                 PlugAndCharge.getInstance().setPCGUI(pcGUI);
                 PlugAndCharge.getInstance().setDebugGUI(debugGUI);
 
+                System.out.println("After program initialization:");
+                MemoryTest.testMemoryUsage();
             }
         });
     }
+
 
 }
