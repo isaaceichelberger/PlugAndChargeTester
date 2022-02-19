@@ -211,8 +211,8 @@ public class PlugAndChargeGUI {
                 PlugAndCharge.getInstance().setPCGUI(pcGUI);
                 PlugAndCharge.getInstance().setDebugGUI(debugGUI);
 
-                System.out.println("After Program initialization:");
-                MemoryTest.testMemoryUsage();
+                //System.out.println("After Program initialization:");
+                //MemoryTest.testMemoryUsage();
 
             }
         });
