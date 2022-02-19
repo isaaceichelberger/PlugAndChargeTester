@@ -3,6 +3,7 @@ package Listeners;
 import GUI.PlugAndCharge;
 import GUI.PlugAndChargeGUI;
 import GUI.DebugGUI;
+import UnitTest.MemoryTest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,10 +46,13 @@ public class ButtonListener implements ActionListener {
                                 debugArea.append(textField.getText() + line + "\n");
                                 //debugField.selectAll();
                                 debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                                System.out.println("While Emulating Station:");
+                                MemoryTest.testMemoryUsage();
                             }
                             reader.close();
                             process.destroy();
-
+                            System.out.println("After Emulating Station:");
+                            MemoryTest.testMemoryUsage();
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -69,9 +73,13 @@ public class ButtonListener implements ActionListener {
                                 debugArea.append(textField.getText() + line + "\n");
                                 //debugField.selectAll();
                                 debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                                System.out.println("While Emulating Vehicle:");
+                                MemoryTest.testMemoryUsage();
                             }
                             reader.close();
                             process.destroy();
+                            System.out.println("After Emulating Vehicle:");
+                            MemoryTest.testMemoryUsage();
 
                         } catch (IOException e1) {
                             e1.printStackTrace();
@@ -117,6 +125,8 @@ public class ButtonListener implements ActionListener {
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                System.out.println("While Debug Menu is Displayed:");
+                MemoryTest.testMemoryUsage();
                 break;
             case "Back":
                 frame.revalidate();
@@ -127,6 +137,8 @@ public class ButtonListener implements ActionListener {
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                System.out.println("After UI is Redisplayed:");
+                MemoryTest.testMemoryUsage();
                 break;
         }
     }
