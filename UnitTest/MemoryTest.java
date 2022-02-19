@@ -9,7 +9,6 @@ public class MemoryTest {
     }
 
     public static void testMemoryUsage(){
-        System.out.println("After program initialization:");
         // Get the Java runtime
         Runtime runtime = Runtime.getRuntime();
         // Run the garbage collector
