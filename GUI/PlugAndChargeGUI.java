@@ -29,33 +29,47 @@ public class PlugAndChargeGUI {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         panel = new JPanel();        
         panel.setLayout(new GridBagLayout());
+        panel.setBackground(Color.WHITE);
         ButtonListener buttonListener = new ButtonListener();
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel lblPCT = new JLabel("Plug and Charge Tester");
+        JLabel lblPCT = new JLabel("Plug and Charge Tester V.0.1");
         lblPCT.setFont(new Font("Vernanda", Font.PLAIN, 16));
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 10, 10, 0);
         gbc.weightx = 1;
-        gbc.weighty = 0.8;
         panel.add(lblPCT, gbc);
 
-        JLabel lblVersion = new JLabel("V.0.1");
-        lblVersion.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        JButton logoButton = new JButton();
+        try {
+            Image logo = ImageIO.read(getClass().getResource("../Assets/img/logo.png"));
+            Image resizedLogo = logo.getScaledInstance(screenSize.width * 1/12, screenSize.height * 1/9, Image.SCALE_SMOOTH);
+            logoButton.setIcon(new ImageIcon(resizedLogo));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.weightx = 0.05;
-        gbc.weighty = 0.8;
-        panel.add(lblVersion, gbc);
+        gbc.anchor = GridBagConstraints.NORTH;
+        logoButton.setBackground(null);
+        logoButton.setBackground(Color.WHITE);
+        logoButton.setBorder(null);
+        logoButton.setFocusPainted(false);
+        panel.add(logoButton, gbc);
 
         stationButton = new JButton("Emulate Station");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         stationButton.addActionListener(buttonListener);
+        stationButton.setBackground(Color.WHITE);
+        //stationButton.setBorder(null);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 0, 0);
@@ -79,6 +93,8 @@ public class PlugAndChargeGUI {
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         vehicleButton.addActionListener(buttonListener);
+        vehicleButton.setBackground(Color.WHITE);
+        //vehicleButton.setBorder(null);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 10, 0, 0);
@@ -90,6 +106,8 @@ public class PlugAndChargeGUI {
         JButton debugButton = new JButton("Debug");
         gbc = new GridBagConstraints();
         debugButton.addActionListener(buttonListener);
+        debugButton.setBackground(Color.WHITE);
+        //debugButton.setBorder(null);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -102,6 +120,8 @@ public class PlugAndChargeGUI {
         gbc = new GridBagConstraints();
         startButton.addActionListener(buttonListener);
         gbc.fill = GridBagConstraints.BOTH;
+        startButton.setBackground(Color.WHITE);
+        //startButton.setBorder(null);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.insets = new Insets(0, 10, 0, 0);
@@ -111,6 +131,7 @@ public class PlugAndChargeGUI {
 
         JButton testMultipleButton = new JButton("Test Twice");
         gbc = new GridBagConstraints();
+        testMultipleButton.setBackground(Color.WHITE);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -188,11 +209,11 @@ public class PlugAndChargeGUI {
                 PlugAndCharge.getInstance().setPCGUI(pcGUI);
                 PlugAndCharge.getInstance().setDebugGUI(debugGUI);
 
-                System.out.println("After program initialization:");
+                System.out.println("After Program initialization:");
                 MemoryTest.testMemoryUsage();
+
             }
         });
     }
-
 
 }
