@@ -62,7 +62,7 @@ public class ButtonListener implements ActionListener {
 
                 } else if (PlugAndCharge.getInstance().isEmulateVehicle()) {
                     Thread thread = new Thread(() -> {
-                        String command = "java -cp /home/pi/PlugAndChargeTester/RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar";
+                        String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar";
                         try {
                             Process process = Runtime.getRuntime().exec(command);
                             BufferedReader reader = new BufferedReader(
