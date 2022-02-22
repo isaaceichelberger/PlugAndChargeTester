@@ -44,7 +44,8 @@ public class ButtonListener implements ActionListener {
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
                                 if (line.contains("XML representation") || 
-                                    line.contains("Base64 encoded")){
+                                    line.contains("Base64 encoded") ||
+                                    line.contains("<?xml version")){
                                         continue;
                                 } else {
                                     debugArea.append(textField.getText() + line + "\n");
@@ -78,7 +79,8 @@ public class ButtonListener implements ActionListener {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 if (line.contains("XML representation") || 
-                                    line.contains("Base64 encoded")){
+                                    line.contains("Base64 encoded") ||
+                                    line.contains("<?xml version")){
                                         continue;
                                 } else {
                                     debugArea.append(textField.getText() + line + "\n");
