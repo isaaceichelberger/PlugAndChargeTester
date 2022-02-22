@@ -83,6 +83,7 @@ public class ButtonListener implements ActionListener {
                                     line.contains("<?xml version")){
                                         continue;
                                 } else {
+                                    // TOOD need to remove the data before "connectionhandler" or other things
                                     debugArea.append(textField.getText() + line + "\n");
                                     //debugField.selectAll();
                                     debugArea.setCaretPosition(responseArea.getDocument().getLength());
