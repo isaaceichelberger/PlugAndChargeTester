@@ -27,13 +27,13 @@ public class ButtonListener implements ActionListener {
                 JTextArea responseArea = PlugAndChargeGUI.getResponseArea();
                 JTextField debugField = DebugGUI.getTextField();
                 JTextArea debugArea = DebugGUI.getResponseArea();
-                String text = textField.getText();
-                responseArea.append(text + "Starting Test\n");
-                textField.selectAll();
                 //Make sure the new text is visible, even if there
                 //was a selection in the text area.
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
                 if (PlugAndCharge.getInstance().isEmulateStation()){
+                    String text = textField.getText();
+                    responseArea.append(text + "Starting Test\n");
+                    textField.selectAll();
                     Thread thread = new Thread(() -> {
                         String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar";
                         try {
@@ -42,10 +42,15 @@ public class ButtonListener implements ActionListener {
                                     new InputStreamReader(process.getInputStream()));
                             String line;
                             while ((line = reader.readLine()) != null) {
-                                //System.out.println(line);
-                                debugArea.append(textField.getText() + line + "\n");
-                                //debugField.selectAll();
-                                debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                                System.out.println(line);
+                                if (line.contains("XML representation") || 
+                                    line.contains("Base64 encoded")){
+                                        continue;
+                                } else {
+                                    debugArea.append(textField.getText() + line + "\n");
+                                    //debugField.selectAll();
+                                    debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                                }
                                 //System.out.println("While Emulating Station:");
                                 //MemoryTest.testMemoryUsage();
                             }
@@ -61,6 +66,9 @@ public class ButtonListener implements ActionListener {
                     thread.start();
 
                 } else if (PlugAndCharge.getInstance().isEmulateVehicle()) {
+                    String text = textField.getText();
+                    responseArea.append(text + "Starting Test\n");
+                    textField.selectAll();
                     Thread thread = new Thread(() -> {
                         String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-EVCC/target/rise-v2g-evcc-1.2.6.jar";
                         try {
@@ -69,12 +77,14 @@ public class ButtonListener implements ActionListener {
                                     new InputStreamReader(process.getInputStream()));
                             String line;
                             while ((line = reader.readLine()) != null) {
-                                //System.out.println(line);
-                                debugArea.append(textField.getText() + line + "\n");
-                                //debugField.selectAll();
-                                debugArea.setCaretPosition(responseArea.getDocument().getLength());
-                                //System.out.println("While Emulating Vehicle:");
-                                //MemoryTest.testMemoryUsage();
+                                if (line.contains("XML representation") || 
+                                    line.contains("Base64 encoded")){
+                                        continue;
+                                } else {
+                                    debugArea.append(textField.getText() + line + "\n");
+                                    //debugField.selectAll();
+                                    debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                                }
                             }
                             reader.close();
                             process.destroy();
