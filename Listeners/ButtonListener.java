@@ -103,20 +103,20 @@ public class ButtonListener implements ActionListener {
                     });
                     thread.start();
                 }
-                PlugAndChargeGUI.getButtons().get(0).setBackground(null); // set Emulate Station Button back to default
-                PlugAndChargeGUI.getButtons().get(0).setForeground(null); // set Emulate Station Button back to default
-                PlugAndChargeGUI.getButtons().get(1).setBackground(null); // set Emulate Vehicle Button back to default
-                PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
-                ((JButton) e.getSource()).setBackground(null);
-                ((JButton) e.getSource()).setForeground(null);
+                PlugAndChargeGUI.getButtons().get(0).setBackground(Color.WHITE); // set Emulate Station Button back to default
+                PlugAndChargeGUI.getButtons().get(0).setForeground(Color.BLACK); // set Emulate Station Button back to default
+                PlugAndChargeGUI.getButtons().get(1).setBackground(Color.WHITE); // set Emulate Vehicle Button back to default
+                PlugAndChargeGUI.getButtons().get(1).setForeground(Color.BLACK); // set Emulate Vehicle Button back to default
+                ((JButton) e.getSource()).setBackground(Color.WHITE);
+                ((JButton) e.getSource()).setForeground(Color.BLACK);
                 PlugAndCharge.getInstance().setEmulateStation(false);
                 PlugAndCharge.getInstance().setEmulateVehicle(false);
                 //responseArea.append("Test complete.\n");
                 break;
             case "Emulate Station":
                 if (PlugAndCharge.getInstance().isEmulateVehicle()){
-                    PlugAndChargeGUI.getButtons().get(1).setBackground(null); // set Emulate Vehicle Button back to default
-                    PlugAndChargeGUI.getButtons().get(1).setForeground(null); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(1).setBackground(Color.WHITE); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(1).setForeground(Color.BLACK); // set Emulate Vehicle Button back to default
                     PlugAndCharge.getInstance().setEmulateStation(true);
                 }
                 button.setBackground(Color.BLACK);
@@ -126,8 +126,8 @@ public class ButtonListener implements ActionListener {
                 break;
             case "Emulate Vehicle":
                 if (PlugAndCharge.getInstance().isEmulateStation()){
-                    PlugAndChargeGUI.getButtons().get(0).setBackground(null); // set Emulate Vehicle Button back to default
-                    PlugAndChargeGUI.getButtons().get(0).setForeground(null); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(0).setBackground(Color.WHITE); // set Emulate Vehicle Button back to default
+                    PlugAndChargeGUI.getButtons().get(0).setForeground(Color.BLACK); // set Emulate Vehicle Button back to default
                     PlugAndCharge.getInstance().setEmulateVehicle(true);
                 }
                 button.setBackground(Color.BLACK);

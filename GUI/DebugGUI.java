@@ -13,10 +13,11 @@ public class DebugGUI {
     public DebugGUI() {
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
+        panel.setBackground(Color.LIGHT_GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel lblPCT = new JLabel("Plug and Charge Tester Debug");
-        lblPCT.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        lblPCT.setFont(new Font("Vernanda", Font.BOLD, 16));
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -29,10 +30,12 @@ public class DebugGUI {
         gbc.fill = GridBagConstraints.BOTH;
         ButtonListener buttonListener = new ButtonListener();
         backButton.addActionListener(buttonListener);
+        backButton.setBackground(Color.WHITE);
+        backButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.insets = new Insets(0, 10, 0, 10);
+        gbc.insets = new Insets(0, 10, 10, 10);
         gbc.weightx = 1;
         gbc.weighty = 2;
         gbc.gridheight = 1;
