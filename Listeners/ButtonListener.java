@@ -6,12 +6,15 @@ import GUI.DebugGUI;
 import UnitTest.MemoryTest;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.time.format.DateTimeFormatter;
 
 public class ButtonListener implements ActionListener {
 
@@ -19,14 +22,14 @@ public class ButtonListener implements ActionListener {
         JButton button = (JButton) e.getSource();
         String buttonName = button.getText();
         JFrame frame = PlugAndCharge.getInstance().getFrame();
+        JTextField textField = PlugAndChargeGUI.getTextField();
+        JTextArea responseArea = PlugAndChargeGUI.getResponseArea();
+        JTextField debugField = DebugGUI.getTextField();
+        JTextArea debugArea = DebugGUI.getResponseArea();
         switch (buttonName){
             case "Start":
                 button.setBackground(Color.BLACK);
                 button.setForeground(Color.WHITE);
-                JTextField textField = PlugAndChargeGUI.getTextField();
-                JTextArea responseArea = PlugAndChargeGUI.getResponseArea();
-                JTextField debugField = DebugGUI.getTextField();
-                JTextArea debugArea = DebugGUI.getResponseArea();
                 //Make sure the new text is visible, even if there
                 //was a selection in the text area.
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
@@ -43,14 +46,14 @@ public class ButtonListener implements ActionListener {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 System.out.println(line);
-                                if (line.contains("XML representation") || 
+                               if (line.contains("XML representation") ||
                                     line.contains("Base64 encoded") ||
                                     line.contains("<?xml version")){
                                         continue;
                                 } else {
                                     String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
                                     line2.trim();
-                                    debugArea.append(textField.getText() + line2 + "\n");
+                                    debugArea.append(line2 + "\n");
                                     //debugField.selectAll();
                                     debugArea.setCaretPosition(responseArea.getDocument().getLength());
                                 }
@@ -87,7 +90,15 @@ public class ButtonListener implements ActionListener {
                                 } else {
                                     String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
                                     line2.trim();
-                                    debugArea.append(textField.getText() + line2 + "\n");
+                                    // TODO, might need JTextPane instead of TextArea
+                                    if (line2.contains("DummyEVController")){
+                                        debugArea.setForeground(Color.GREEN); // Signal New Phase
+                                    } else if (line2.contains("V2GCommunicationSessionHandler")){
+                                        debugArea.setForeground(Color.CYAN); // Signal Session Changes
+                                    }
+                                    debugArea.append(line2 + "\n");
+                                    // Currently changes the whole thing, not one line
+                                    debugArea.setForeground(Color.WHITE); // Incase color has changed
                                     //debugField.selectAll();
                                     debugArea.setCaretPosition(responseArea.getDocument().getLength());
                                 }
@@ -158,6 +169,23 @@ public class ButtonListener implements ActionListener {
                 //System.out.println("After UI is Redisplayed:");
                 //MemoryTest.testMemoryUsage();
                 break;
+            case "Export Log":
+                // In case the directory is not made
+                if (!debugArea.getText().equals("")) { // provided the area is not empty
+                    new File("../logs").mkdirs();
+                    DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+                    File logFile = new File("../logs/log" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".log");
+                    try {
+                        logFile.createNewFile();
+                        FileWriter writer = new FileWriter("../logs/" + logFile.getName());
+                        writer.write(debugArea.getText());
+                        writer.close();
+                        debugArea.append("INFO: Log file written to " + logFile.getName() + "\n");
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
+                    }
+                }
         }
     }
+
 }

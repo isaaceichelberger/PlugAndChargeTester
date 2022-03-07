@@ -152,8 +152,8 @@ public class PlugAndChargeGUI {
         responseArea = new JTextArea(10, 80);
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
-        responseArea.setForeground(Color.GREEN);
-        Font font = new Font("Courier", Font.BOLD, 16);
+        responseArea.setForeground(Color.WHITE);
+        Font font = new Font("Courier", Font.BOLD, 20);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);

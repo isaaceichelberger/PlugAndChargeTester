@@ -32,7 +32,7 @@ public class DebugGUI {
         backButton.addActionListener(buttonListener);
         backButton.setBackground(Color.WHITE);
         backButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 4;
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 10, 10, 10);
@@ -41,17 +41,33 @@ public class DebugGUI {
         gbc.gridheight = 1;
         panel.add(backButton, gbc);
 
+        JButton logsButton = new JButton("Export Log");
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        ButtonListener logsListener = new ButtonListener();
+        logsButton.addActionListener(logsListener);
+        logsButton.setBackground(Color.WHITE);
+        logsButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        gbc.gridwidth = 1;
+        gbc.gridx = 4;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 10, 10, 10);
+        gbc.weightx = 0.25;
+        gbc.weighty = 2;
+        gbc.gridheight = 1;
+        panel.add(logsButton, gbc);
+
         responseArea = new JTextArea(20, 80);
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
-        responseArea.setForeground(Color.GREEN);
-        Font font = new Font("Courier", Font.BOLD, 12);
+        responseArea.setForeground(Color.WHITE);
+        Font font = new Font("Courier", Font.BOLD, 20);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 5;
         gbc.gridheight = 6;
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -73,5 +89,6 @@ public class DebugGUI {
     public static JTextArea getResponseArea(){
         return responseArea;
     }
+
 
 }
