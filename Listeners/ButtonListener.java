@@ -32,6 +32,10 @@ public class ButtonListener implements ActionListener {
                 button.setForeground(Color.WHITE);
                 //Make sure the new text is visible, even if there
                 //was a selection in the text area.
+                responseArea.selectAll();
+                responseArea.replaceSelection(""); // Reset Response Area
+                debugArea.selectAll();
+                debugArea.replaceSelection("");
                 responseArea.setCaretPosition(responseArea.getDocument().getLength());
                 if (PlugAndCharge.getInstance().isEmulateStation()){
                     String text = textField.getText();
