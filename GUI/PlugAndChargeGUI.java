@@ -47,7 +47,7 @@ public class PlugAndChargeGUI {
 
         JButton logoButton = new JButton();
         try {
-            Image logo = ImageIO.read(getClass().getResource("../Assets/img/logo.png"));
+            Image logo = ImageIO.read(getClass().getResource("/Assets/img/logo.png"));
             Image resizedLogo = logo.getScaledInstance(screenSize.width * 1/12, screenSize.height * 1/9, Image.SCALE_SMOOTH);
             logoButton.setIcon(new ImageIcon(resizedLogo));
         } catch (IOException e){
@@ -67,7 +67,7 @@ public class PlugAndChargeGUI {
         panel.add(logoButton, gbc);
 
         stationButton = new JButton("Emulate Station");
-        stationButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        stationButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         stationButton.addActionListener(buttonListener);
@@ -83,7 +83,7 @@ public class PlugAndChargeGUI {
 
         JLabel optionsLabel = new JLabel("Options:");
         gbc = new GridBagConstraints();
-        optionsLabel.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        optionsLabel.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -98,7 +98,7 @@ public class PlugAndChargeGUI {
         vehicleButton.addActionListener(buttonListener);
         vehicleButton.setBackground(Color.WHITE);
         //vehicleButton.setBorder(null);
-        vehicleButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        vehicleButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 10, 0, 0);
@@ -111,7 +111,7 @@ public class PlugAndChargeGUI {
         gbc = new GridBagConstraints();
         debugButton.addActionListener(buttonListener);
         debugButton.setBackground(Color.WHITE);
-        debugButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        debugButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         //debugButton.setBorder(null);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
@@ -124,7 +124,7 @@ public class PlugAndChargeGUI {
         JButton startButton = new JButton("Start");
         gbc = new GridBagConstraints();
         startButton.addActionListener(buttonListener);
-        startButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        startButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.fill = GridBagConstraints.BOTH;
         startButton.setBackground(Color.WHITE);
         //startButton.setBorder(null);
@@ -138,7 +138,7 @@ public class PlugAndChargeGUI {
         JButton testMultipleButton = new JButton("Test Twice");
         gbc = new GridBagConstraints();
         testMultipleButton.setBackground(Color.WHITE);
-        testMultipleButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        testMultipleButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -153,7 +153,7 @@ public class PlugAndChargeGUI {
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
         responseArea.setForeground(Color.WHITE);
-        Font font = new Font("Courier", Font.BOLD, 20);
+        Font font = new Font("Courier", Font.BOLD, 16);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);

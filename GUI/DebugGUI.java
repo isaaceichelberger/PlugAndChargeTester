@@ -31,7 +31,7 @@ public class DebugGUI {
         ButtonListener buttonListener = new ButtonListener();
         backButton.addActionListener(buttonListener);
         backButton.setBackground(Color.WHITE);
-        backButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        backButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.gridwidth = 4;
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -47,7 +47,7 @@ public class DebugGUI {
         ButtonListener logsListener = new ButtonListener();
         logsButton.addActionListener(logsListener);
         logsButton.setBackground(Color.WHITE);
-        logsButton.setFont(new Font("Vernanda", Font.PLAIN, 16));
+        logsButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
         gbc.gridwidth = 1;
         gbc.gridx = 4;
         gbc.gridy = 1;
@@ -61,7 +61,7 @@ public class DebugGUI {
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
         responseArea.setForeground(Color.WHITE);
-        Font font = new Font("Courier", Font.BOLD, 20);
+        Font font = new Font("Courier", Font.BOLD, 16);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);
