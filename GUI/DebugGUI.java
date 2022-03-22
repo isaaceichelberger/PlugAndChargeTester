@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import Listeners.ButtonListener;
+import Listeners.*;
 
 public class DebugGUI {
 
@@ -44,7 +44,7 @@ public class DebugGUI {
         JButton logsButton = new JButton("Export Log");
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-        ButtonListener logsListener = new ButtonListener();
+        LogListener logsListener = new LogListener();
         logsButton.addActionListener(logsListener);
         logsButton.setBackground(Color.WHITE);
         logsButton.setFont(new Font("Vernanda", Font.PLAIN, 14));
