@@ -34,7 +34,7 @@ public class PlugAndCharge {
         this.optionsESGUI = optionsESGUI;
         this.optionsEVGUI = optionsEVGUI;
         this.useIso = false;
-        this.stationAmps = 0;
+        this.stationAmps = 30;
         if (instance == null){
             instance = this;
         }

@@ -71,6 +71,8 @@ public class StartListener implements ActionListener{
             });
             thread.start();
 
+            System.out.println("hey");
+
             Thread thread2 = new Thread(() -> {
                 String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar";
                 try {
