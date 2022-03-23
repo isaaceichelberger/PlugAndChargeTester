@@ -102,8 +102,8 @@ if __name__ == "__main__":
    import read_PWM
 
    PWM_GPIO =19 # GPIO Pin 35
-   RUN_TIME = 60.0
-   SAMPLE_TIME = 4
+   RUN_TIME = 5
+   SAMPLE_TIME = 1
 
    pi = pigpio.pi()
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
       total_amps += amps
       
 
-   print(total_amps/num_samples) # print the average sampled amps
+   print(round(total_amps/num_samples)) # print the average sampled amps
 
    p.cancel()
 

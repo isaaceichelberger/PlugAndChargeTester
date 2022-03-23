@@ -15,19 +15,17 @@ def setup():
     pwm.start(dc) # Set the starting Duty Cycle
   
 def loop():
+    print("[INFO] Duty Cycle: " + str(dc) + "\n")
+    count = 0
     while True:
         pwm.ChangeDutyCycle(dc)
         time.sleep(0.01)
+        count += 1
 
-         
-def destroy():
-    pwm.stop()
-    GPIO.output(pwmPin, GPIO.LOW)
-    GPIO.cleanup()
+def end():
+    print("[INFO] PWM Wave Running\n")
      
 if  __name__ == '__main__':
     setup()
-    try:
-        loop()
-    except KeyboardInterrupt:
-        destroy()
+    loop()
+    end()

@@ -3,7 +3,7 @@ import time
 import sys
  
 pwmPin = 33
-MAX_COUNT = 50
+MAX_COUNT = 200
  
 def setup():
     global pwm
@@ -18,23 +18,18 @@ def setup():
   
 def loop():
     count = 0
-    while True:
+    while count < MAX_COUNT:
         pwm.ChangeDutyCycle(dc)
         time.sleep(0.01)
         count += 1
-        if (count == MAX_COUNT):
-            print("[INFO] Starting ISO15118, changing Duty Cycle to 5%")
-            dc = 5
 
-         
-def destroy():
-    pwm.stop()
-    GPIO.output(pwmPin, GPIO.LOW)
-    GPIO.cleanup()
-     
+
+def end():
+    print("[INFO] Starting ISO15118, changing Duty Cycle to 5%")
+     dc = 5
+     pwm.ChangeDutyCycle(dc)
+
+
 if  __name__ == '__main__':
     setup()
-    try:
-        loop()
-    except KeyboardInterrupt:
-        destroy()
+    loop()
