@@ -131,6 +131,7 @@ public class OptionsES {
         Font font = new Font("Courier", Font.BOLD, 16);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
+        responseArea.append("Amps: 30\n"); // Append initial amps
         JScrollPane scrollPane = new JScrollPane(responseArea);
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;

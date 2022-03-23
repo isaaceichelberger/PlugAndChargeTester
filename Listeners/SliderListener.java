@@ -21,13 +21,13 @@ public class SliderListener implements ChangeListener{
         if (!source.getValueIsAdjusting()) {
             JTextArea responseArea = OptionsES.getResponseArea();
             int amps = (int) source.getValue(); 
-            responseArea.append(Integer.toString(amps));
+            //responseArea.append(Integer.toString(amps));
             PlugAndCharge.getInstance().setStationAmps(amps);
             String text = responseArea.getText();
-            text.replaceAll("Amps: \b([0-9]|[1-9][0-9])\b", "Amps: " + amps);
+            String replacedText = text.replaceAll("(0*(?:[0-9][0-9]?|100))", Integer.toString(amps)); // match anything 0-100
             responseArea.selectAll();
             responseArea.replaceSelection(""); // Reset Response Area
-            responseArea.append(text);
+            responseArea.append(replacedText);
         }
     }
 }

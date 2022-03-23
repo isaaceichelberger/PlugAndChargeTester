@@ -110,6 +110,8 @@ if __name__ == "__main__":
    p = read_PWM.reader(pi, PWM_GPIO)
 
    start = time.time()
+   num_samples = 0
+   total_amps = 0
 
    while (time.time() - start) < RUN_TIME:
 
@@ -122,9 +124,12 @@ if __name__ == "__main__":
       if (dc >= 84.4):
          amps = (dc - 64) * 2.5
      
-      print("f={:.1f} pw={} dc={:.2f}".format(f, int(pw+0.5), dc))
-      print("amps={:.1f}".format(amps))
+      #print("f={:.1f} pw={} dc={:.2f}".format(f, int(pw+0.5), dc))
+      num_samples += 1
+      total_amps += amps
       
+
+   print(total_amps/num_samples) # print the average sampled amps
 
    p.cancel()
 

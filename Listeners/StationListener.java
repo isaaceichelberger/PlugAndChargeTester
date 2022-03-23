@@ -27,6 +27,7 @@ public class StationListener implements ActionListener{
                     PlugAndChargeGUI.getButtons().get(1).setBackground(Color.WHITE); // set Emulate Vehicle Button back to default
                     PlugAndChargeGUI.getButtons().get(1).setForeground(Color.BLACK); // set Emulate Vehicle Button back to default
                     PlugAndCharge.getInstance().setEmulateVehicle(false);
+                    PlugAndCharge.getInstance().setUseIso(false);
                 }
                 button.setBackground(Color.BLACK); // Set Station Button to Black
                 button.setForeground(Color.WHITE);
