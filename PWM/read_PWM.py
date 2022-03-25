@@ -131,6 +131,22 @@ if __name__ == "__main__":
 
    print(round(total_amps/num_samples)) # print the average sampled amps
 
+   # Run to check for ISO15118
+   RUN_TIME = 60
+   SAMPLE_TIME = 1
+
+   while (time.time() - start) < RUN_TIME:
+
+      time.sleep(SAMPLE_TIME)
+
+      f = p.frequency()
+      pw = p.pulse_width()
+      dc = p.duty_cycle()
+      amps = 0.6 * dc
+      if (dc <= 5 and dc >= 4.5) or (dc <= 5.5 and dc >= 4.5):
+         print("[INFO] Station Changed Duty Cycle to 5%")
+         print("[INFO] Initiating ISO15118")
+
    p.cancel()
 
    pi.stop()

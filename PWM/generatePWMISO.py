@@ -3,11 +3,12 @@ import time
 import sys
  
 pwmPin = 33
-MAX_COUNT = 200
- 
+
 def setup():
     global pwm
     global dc
+    global START_TIME
+    START_TIME = time.time()
     dc = float(sys.argv[1]) # 50 dc default
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pwmPin, GPIO.OUT)
@@ -17,18 +18,13 @@ def setup():
 
   
 def loop():
-    count = 0
-    while count < MAX_COUNT:
+    while time.time() - START_TIME <= 3:
         pwm.ChangeDutyCycle(dc)
         time.sleep(0.01)
-        count += 1
-
-
-def end():
-    print("[INFO] Starting ISO15118, changing Duty Cycle to 5%")
-     dc = 5
-     pwm.ChangeDutyCycle(dc)
-
+    print("[INFO] Starting ISO15118, changing Duty Cycle to 5%\n")
+    while True:
+        pwm.ChangeDutyCycle(5)
+        time.sleep(0.01)
 
 if  __name__ == '__main__':
     setup()

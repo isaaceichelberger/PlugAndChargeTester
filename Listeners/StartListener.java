@@ -16,9 +16,15 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.format.DateTimeFormatter;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 
 // TODO:
-// Ensure PWM Wave works with small loops
 // Print Certificate Exchange
 // End Station Process
 
@@ -58,19 +64,30 @@ public class StartListener implements ActionListener{
                 } else {
                     dc = (amps / 2.5) + 64.0;
                 }
-                String command = "python /home/pi/PlugAndChargeTester/PWM/generatePWMISO.py " + dc;
+                //String command = "python /home/pi/PlugAndChargeTester/PWM/generatePWMISO.py " + dc;
                 try {
-                    Process process = Runtime.getRuntime().exec(command);
+                    ProcessBuilder builder = new ProcessBuilder("python", "generatePWMISO.py", String.valueOf(dc));
+                    builder.environment().put("PYTHONIOENCODING", "UTF-8");
+                    builder.environment().put("PYTHONUNBUFFERED","TRUE");
+                    builder.directory(new File("/home/pi/PlugAndChargeTester/PWM/"));
+                    //Process process = Runtime.getRuntime().exec(command);
+                    Process process = builder.start();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(process.getInputStream()));
                     String line;
                     boolean flag = false;
+                    boolean printed = false;
                     while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
-                        responseArea.append(line);
                         flag = true;
+                        System.out.println(line);
+                        responseArea.append(line + "\n");
+                        if (flag && !printed){
+                            responseArea.append("[INFO] J1772 Communication Complete\n");
+                            printed = true;
+                        }
                     }
                     reader.close();
+                    process.waitFor();
                     process.destroy();
                     if (flag)
                         responseArea.append("[INFO] J1772 Communication Complete\n");
@@ -78,12 +95,19 @@ public class StartListener implements ActionListener{
                         responseArea.append("[ERROR] Communication Unsuccessful\n");
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                } catch (InterruptedException e2){
+                    e2.printStackTrace();
                 }
             });
             thread.start();
-
-
+        
             Thread thread2 = new Thread(() -> {
+                    try {
+                        // wait to execute thread 2
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e2){
+                        e2.printStackTrace();
+                    }
                 String command = "java -jar /home/pi/PlugAndChargeTester/RISE-V2G-SECC/target/rise-v2g-secc-1.2.6.jar";
                 try {
                     Process process = Runtime.getRuntime().exec(command);
@@ -93,15 +117,17 @@ public class StartListener implements ActionListener{
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);
                         if (line.contains("XML representation") ||
-                            line.contains("Base64 encoded") ||
-                            line.contains("<?xml version")){
+                            line.contains("Base64 encoded")){
                                 continue;
+                        } else if (line.contains("<?xml version=")){
+                            //Document xmlDoc = loadXMLFromString(line);
+                            // TODO
                         } else {
                             String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
                             line2.trim();
                             debugArea.append(line2 + "\n");
                             //debugField.selectAll();
-                            debugArea.setCaretPosition(responseArea.getDocument().getLength());
+                            //debugArea.setCaretPosition(responseArea.getDocument().getLength());
                         }
                         //System.out.println("While Emulating Station:");
                         //MemoryTest.testMemoryUsage();
@@ -116,18 +142,6 @@ public class StartListener implements ActionListener{
         });
         thread2.start();
 
-            Thread thread3 = new Thread(() -> {
-            String command = "python /home/pi/PlugAndChargeTester/PWM/cleanupPWM.py";
-            try {
-                Process process = Runtime.getRuntime().exec(command);
-                responseArea.append("[INFO] PWM Cleaned Up\n");
-                process.destroy();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-        thread3.start();
-
         } else {
             Thread thread = new Thread(() -> {
                 double dc;
@@ -136,42 +150,39 @@ public class StartListener implements ActionListener{
                     dc = amps / 0.6;
                 } else {
                     dc = (amps / 2.5) + 64.0;
-                }
-                String command = "python /home/pi/PlugAndChargeTester/PWM/generatePWM.py " + dc;
-                try {
-                    Process process = Runtime.getRuntime().exec(command);
+                }                try {
+                    ProcessBuilder builder = new ProcessBuilder("python", "generatePWM.py", String.valueOf(dc));
+                    builder.environment().put("PYTHONIOENCODING", "UTF-8");
+                    builder.environment().put("PYTHONUNBUFFERED","TRUE");
+                    builder.directory(new File("/home/pi/PlugAndChargeTester/PWM/"));
+                    //Process process = Runtime.getRuntime().exec(command);
+                    Process process = builder.start();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(process.getInputStream()));
-                    String line;
                     boolean flag = false;
+                    boolean printed = false;
+                    String line;
                     while ((line = reader.readLine()) != null) {
                         flag = true;
                         System.out.println(line);
-                        responseArea.append(line);
+                        responseArea.append(line + "\n");
+                        if (flag && !printed){
+                            responseArea.append("[INFO] J1772 Communication Complete\n");
+                            printed = true;
+                        }
                     }
-                    if (flag)
-                        responseArea.append("[INFO] J1772 Communication Complete\n");
-                    else
-                        responseArea.append("[ERROR] Communication Unsuccessful\n");
+        
                     reader.close();
+                    process.waitFor();
                     process.destroy();
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                } catch (InterruptedException e2){
+                    e2.printStackTrace();
                 }
             });
             thread.start();
 
-            Thread thread2 = new Thread(() -> {
-            String command = "python /home/pi/PlugAndChargeTester/PWM/cleanupPWM.py";
-            try {
-                Process process = Runtime.getRuntime().exec(command);
-                responseArea.append("[INFO] PWM Cleaned Up\n");
-                process.destroy();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-        thread2.start();
         }
             
         // VEHICLE
@@ -182,24 +193,29 @@ public class StartListener implements ActionListener{
 
             if (PlugAndCharge.getInstance().isUseIso()){
                 Thread thread = new Thread(() -> {
-                String command = "python /home/pi/PlugAndChargeTester/PWM/read_PWM.py";
                 try {
-                    Process process = Runtime.getRuntime().exec(command);
+                    ProcessBuilder builder = new ProcessBuilder("python", "read_PWM.py");
+                    builder.environment().put("PYTHONIOENCODING", "UTF-8");
+                    builder.environment().put("PYTHONUNBUFFERED","TRUE");
+                    builder.directory(new File("/home/pi/PlugAndChargeTester/PWM/"));
+                    //Process process = Runtime.getRuntime().exec(command);
+                    Process process = builder.start();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(process.getInputStream()));
                     String line;
                     boolean flag = false;
+                    boolean printed = false;
                     while ((line = reader.readLine()) != null) {
                         String amps = line;
                         responseArea.append("[INFO] Number of Amps Advertised: " + line + "\n");
                         flag = true;
+                        if (flag && !printed){
+                            responseArea.append("[INFO] J1772 Communication Complete\n");
+                            printed = true;
+                        }
                     }
                     reader.close();
                     process.destroy();
-                    if (flag)
-                        responseArea.append("[INFO] J1772 Communication Complete\n");
-                    else
-                        responseArea.append("[ERROR] Communication Unsuccessful\n");
                     responseArea.append("[INFO] Vehicle Charging\n");
                     responseArea.append("[INFO] Initializing ISO15118\n");
                 } catch (IOException e1) {
@@ -224,16 +240,7 @@ public class StartListener implements ActionListener{
                         String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
                         line2.trim();
                         // TODO, might need JTextPane instead of TextArea
-                        if (line2.contains("DummyEVController")){
-                            debugArea.setForeground(Color.GREEN); // Signal New Phase
-                        } else if (line2.contains("V2GCommunicationSessionHandler")){
-                            debugArea.setForeground(Color.CYAN); // Signal Session Changes
-                        }
                         debugArea.append(line2 + "\n");
-                        // Currently changes the whole thing, not one line
-                        debugArea.setForeground(Color.WHITE); // Incase color has changed
-                        //debugField.selectAll();
-                        debugArea.setCaretPosition(responseArea.getDocument().getLength());
                     }
                 }
                 reader.close();
@@ -251,23 +258,28 @@ public class StartListener implements ActionListener{
             Thread thread = new Thread(() -> {
             String command = "python /home/pi/PlugAndChargeTester/PWM/read_PWM.py";
             try {
-                Process process = Runtime.getRuntime().exec(command);
+                 ProcessBuilder builder = new ProcessBuilder("python", "read_PWM.py");
+                builder.environment().put("PYTHONIOENCODING", "UTF-8");
+                builder.environment().put("PYTHONUNBUFFERED","TRUE");
+                builder.directory(new File("/home/pi/PlugAndChargeTester/PWM/"));
+                //Process process = Runtime.getRuntime().exec(command);
+                Process process = builder.start();
+                String line;
                 BufferedReader reader = new BufferedReader(
                         new InputStreamReader(process.getInputStream()));
-                String line;
-                System.out.println("Ran python process");
                 boolean flag = false;
+                boolean printed = false;
                 while ((line = reader.readLine()) != null) {
                     String amps = line;
                     responseArea.append("[INFO] Number of Amps Advertised: " + line + "\n");
                     flag = true;
+                    if (flag && !printed){
+                        responseArea.append("[INFO] J1772 Communication Complete\n");
+                        printed = true;
+                    }
                 }
                 reader.close();
                 process.destroy();
-                if (flag)
-                    responseArea.append("[INFO] J1772 Communication Complete\n");
-                else
-                    responseArea.append("[ERROR] Communication Unsuccessful\n");
                 responseArea.append("[INFO] Vehicle Charging\n");
                 responseArea.append("[INFO] Test Completed\n");
             } catch (IOException e1) {
@@ -290,4 +302,13 @@ public class StartListener implements ActionListener{
     
     }
 }
+
+/*public static Document loadXMLFromString(String xml) throws Exception
+{
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    InputSource is = new InputSource(new StringReader(xml));
+    return builder.parse(is);
+}*/
 }
+

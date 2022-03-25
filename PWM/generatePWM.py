@@ -23,7 +23,7 @@ def loop():
         count += 1
 
 def end():
-    print("[INFO] PWM Wave Running\n")
+    print("[INFO] PWM Wave Running")
      
 if  __name__ == '__main__':
     setup()
