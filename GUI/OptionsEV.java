@@ -94,7 +94,7 @@ public class OptionsEV {
         responseArea.setEditable(false);
         responseArea.setLineWrap(true);
         responseArea.setForeground(Color.WHITE);
-        Font font = new Font("Courier", Font.BOLD, 16);
+        Font font = new Font("Courier", Font.BOLD, 14);
         responseArea.setFont(font);
         responseArea.setBackground(Color.DARK_GRAY);
         JScrollPane scrollPane = new JScrollPane(responseArea);

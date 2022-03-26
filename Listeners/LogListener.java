@@ -30,13 +30,13 @@ public class LogListener implements ActionListener {
         if (!debugArea.getText().equals("")) { // provided the area is not empty
             new File("../logs").mkdirs();
             DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
-            File logFile = new File("../logs/log" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".log");
+            File logFile = new File("/logs/log" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".log");
             try {
                 logFile.createNewFile();
-                FileWriter writer = new FileWriter("../logs/" + logFile.getName());
+                FileWriter writer = new FileWriter("/logs/" + logFile.getName());
                 writer.write(debugArea.getText());
                 writer.close();
-                debugArea.append("INFO: Log file written to " + logFile.getName() + "\n");
+                debugArea.append("[INFO] Log file written to " + logFile.getName() + "\n");
             } catch (IOException e2) {
                 e2.printStackTrace();
             }

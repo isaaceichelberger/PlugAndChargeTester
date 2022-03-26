@@ -123,9 +123,20 @@ public class StartListener implements ActionListener{
                             //Document xmlDoc = loadXMLFromString(line);
                             // TODO
                         } else {
-                            String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
-                            line2.trim();
-                            debugArea.append(line2 + "\n");
+                            if (line.contains(" INFO ")){
+                                String line2 = line.substring(line.indexOf(": ")+1); // remove front junk
+                                line2.trim();
+                                responseArea.append("[INFO] " + line2 + "\n");
+                            } else if (line.contains("Certificate used to verify signature")) {
+                                String line2 = line.substring(line.indexOf(": ")+1); // remove front junk
+                                line2.trim();
+                                responseArea.append("[CERTIFICATE] " + line2 + "\n");
+                            } else {
+                                String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
+                                line2.trim();
+                                debugArea.append(line2 + "\n");
+                            }
+
                             //debugField.selectAll();
                             //debugArea.setCaretPosition(responseArea.getDocument().getLength());
                         }
@@ -216,8 +227,7 @@ public class StartListener implements ActionListener{
                     }
                     reader.close();
                     process.destroy();
-                    responseArea.append("[INFO] Vehicle Charging\n");
-                    responseArea.append("[INFO] Initializing ISO15118\n");
+                
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -237,10 +247,19 @@ public class StartListener implements ActionListener{
                         line.contains("<?xml version")){
                             continue;
                     } else {
+                        if (line.contains(" INFO ")){
+                            String line2 = line.substring(line.indexOf(": ")+1); // remove front junk
+                            line2.trim();
+                            responseArea.append("[INFO] " + line2 + "\n");
+                        } else if (line.contains("Certificate to verify signature")) {
+                            String line2 = line.substring(line.indexOf(": ")+1); // remove front junk
+                            line2.trim();
+                            responseArea.append("[CERTIFICATE] " + line2 + "\n");
+                        } else {
                         String line2 = line.substring(line.indexOf("] ")+1); // remove front junk
                         line2.trim();
-                        // TODO, might need JTextPane instead of TextArea
                         debugArea.append(line2 + "\n");
+                        }
                     }
                 }
                 reader.close();
